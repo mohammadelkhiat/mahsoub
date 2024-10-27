@@ -1,15 +1,13 @@
 # Mahsoub
-27.10.2024
-
-
 ## Mohammad Mostafa Elkhiat
-### Alx SWE (Backend Specializations)
+27.10.2024
+Alx SWE (Backend Specializations)
 
 
 ### Overview
-	Mahsoub is your Gym Pal, the one doing all the calculations for you to know 	where you left last time and where to start this time.
-	Using Mahsoub guarantees for you to always break your record successfully 	with more loads or more counts all together.
-	The secret behind the name which isn’t a secret if you are Arabic is the 	meaning of Mahsoub in English is Calculated, and that’s the whole idea, to 	calculate everything for you.
+* Mahsoub is your Gym Pal, the one doing all the calculations for you to know 	where you left last time and where to start this time.
+* Using Mahsoub guarantees for you to always break your record successfully 	with more loads or more counts all together.
+* The secret behind the name which isn’t a secret if you are Arabic is the 	meaning of Mahsoub in English is Calculated, and that’s the whole idea, to 	calculate everything for you.
 
 
 ### Goals
