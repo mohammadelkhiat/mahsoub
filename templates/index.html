@@ -2,9 +2,44 @@
 <html>
 <head>
     <title>Mahsoub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
     <h1>Welcome to Mahsoub!</h1>
-    <p>This is your gym tracker buddy.</p>
+    <p>This is your gym tracker application. Start tracking today!</p>
 </body>
+<h2>Add an Exercise</h2>
+<form id="exerciseForm">
+    <label for="name">Exercise Name:</label><br>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="reps">Repetitions:</label><br>
+    <input type="number" id="reps" name="reps" required><br>
+
+    <label for="weight">Weight:</label><br>
+    <input type="number" id="weight" name="weight"><br>
+
+    <label for="duration">Duration (mins):</label><br>
+    <input type="number" id="duration" name="duration"><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+<script>
+    const form = document.getElementById('exerciseForm');
+    form.onsubmit = async function(e) {
+        e.preventDefault();
+        const data = {
+            name: form.name.value,
+            repetitions: form.reps.value,
+            weight: form.weight.value,
+            duration: form.duration.value
+        };
+        await fetch('/add-exercise', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        alert('Exercise added!');
+    };
+</script>
 </html>
