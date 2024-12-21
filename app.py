@@ -49,3 +49,18 @@ def get_exercises():
         for exercise in exercises
     ]
     return jsonify(exercises_data)
+
+@app.route('/edit-exercise/<int:id>', methods=['PUT'])
+def edit_exercise(id):
+    exercise = Exercise.query.get(id)
+    if not exercise:
+        return jsonify({'error': 'Exercise not found'}), 404
+
+    data = request.json
+    exercise.name = data.get('name', exercise.name)
+    exercise.repetitions = data.get('repetitions', exercise.repetitions)
+    exercise.weight = data.get('weight', exercise.weight)
+    exercise.duration = data.get('duration', exercise.duration)
+
+    db.session.commit()
+    return jsonify({'message': 'Exercise updated!'})
