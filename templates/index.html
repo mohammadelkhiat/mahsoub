@@ -7,7 +7,6 @@
 <body>
     <h1>Welcome to Mahsoub!</h1>
     <p>This is your gym tracker application. Start tracking today!</p>
-</body>
 <h2>Add an Exercise</h2>
 <form id="exerciseForm">
     <label for="name">Exercise Name:</label><br>
@@ -24,24 +23,6 @@
 
     <button type="submit">Submit</button>
 </form>
-<script>
-    const form = document.getElementById('exerciseForm');
-    form.onsubmit = async function(e) {
-        e.preventDefault();
-        const data = {
-            name: form.name.value,
-            repetitions: form.reps.value,
-            weight: form.weight.value,
-            duration: form.duration.value
-        };
-        await fetch('/add-exercise', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        alert('Exercise added!');
-    };
-</script>
 <h2>Exercise History</h2>
 <table border="1" id="exerciseTable">
     <thead>
@@ -57,27 +38,6 @@
     <tbody>
     </tbody>
 </table>
-<script>
-    // Fetch and display exercises in the table
-    async function loadExercises() {
-        const response = await fetch('/exercises');
-        const exercises = await response.json();
-        const tableBody = document.getElementById('exerciseTable').getElementsByTagName('tbody')[0];
-        tableBody.innerHTML = '';
-        exercises.forEach((exercise) => {
-            const row = `<tr>
-                <td>${exercise.id}</td>
-                <td>${exercise.name}</td>
-                <td>${exercise.repetitions}</td>
-                <td>${exercise.weight ?? 'N/A'}</td>
-                <td>${exercise.duration ?? 'N/A'} min</td>
-                <td>${new Date(exercise.created_at).toLocaleString()}</td>
-            </tr>`;
-            tableBody.innerHTML += row;
-        });
-    }
-
-    // Load data on page load
-    window.onload = loadExercises;
-</script>
+</body>
+<script src="static/js/scripts.js"></script>
 </html>
