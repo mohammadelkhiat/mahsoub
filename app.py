@@ -31,3 +31,21 @@ def add_exercise():
     db.session.add(exercise)
     db.session.commit()
     return jsonify({'message': 'Exercise added!'}), 201
+
+@app.route('/exercises', methods=['GET'])
+def get_exercises():
+    # Query all exercise records from the database
+    exercises = Exercise.query.all()
+    # Transform the data into a list of dictionaries for easy JSON conversion
+    exercises_data = [
+        {
+            'id': exercise.id,
+            'name': exercise.name,
+            'repetitions': exercise.repetitions,
+            'weight': exercise.weight,
+            'duration': exercise.duration,
+            'created_at': exercise.created_at
+        }
+        for exercise in exercises
+    ]
+    return jsonify(exercises_data)
