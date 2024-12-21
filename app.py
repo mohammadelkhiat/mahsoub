@@ -96,7 +96,21 @@ def add_exercise():
         )
         db.session.add(new_exercise)
         db.session.commit()
-        flash('New exercise added successfully!')
+        recommended_exercises = get_recommendations(new_exercise.name)  # Implement this function
+        flash('New exercise added successfully! You might also like: ' + ', '.join(recommended_exercises))
         return redirect(url_for('index'))
     return redirect(url_for('index'))  # Redirect if the method is not POST or any other issue
 
+
+@app.route('/exercise-names')
+def exercise_names():
+    search = request.args.get('term')
+    exercise_list = ['Push-ups', 'Pull-ups', 'Squats', 'Deadlifts', 'Bench Press']  # Extend this list
+    results = [exercise for exercise in exercise_list if search.lower() in exercise.lower()]
+    return jsonify(results)
+
+@app.route('/exercise-data')
+@login_required
+def exercise_data():
+    data = fetch_exercise_data(current_user.id)  # Implement fetching logic
+    return jsonify(data)
