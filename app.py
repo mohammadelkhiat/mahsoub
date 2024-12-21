@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -43,7 +44,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
+        if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('index'))
         flash('Invalid username or password')
@@ -56,10 +57,11 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        hashed_password = generate_password_hash(password)
         if User.query.filter_by(username=username).first():
             flash('Username already exists.')
         else:
-            new_user = User(username=username, password=password)
+            new_user = User(username=username, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)  # Automatically log in the new user
