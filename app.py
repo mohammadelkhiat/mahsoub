@@ -62,7 +62,8 @@ def register():
             new_user = User(username=username, password=password)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for('login'))
+            login_user(new_user)  # Automatically log in the new user
+            return redirect(url_for('index'))
     return render_template('register.html')
 
 @app.route('/logout')
