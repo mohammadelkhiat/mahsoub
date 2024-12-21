@@ -1,7 +1,6 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -24,7 +23,7 @@ class Exercise(db.Model):
     repetitions = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Float, nullable=True)
     duration = db.Column(db.Float, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -35,22 +34,6 @@ def load_user(user_id):
 def index():
     exercises = Exercise.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', exercises=exercises)
-
-@app.route('/add-exercise', methods=['POST'])
-@login_required
-def add_exercise():
-    if request.method == 'POST':
-        new_exercise = Exercise(
-            name=request.form['name'],
-            repetitions=request.form['repetitions'],
-            weight=request.form['weight'],
-            duration=request.form['duration'],
-            user_id=current_user.id
-        )
-        db.session.add(new_exercise)
-        db.session.commit()
-        flash('New exercise added!')
-    return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -88,5 +71,6 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
