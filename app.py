@@ -77,3 +77,26 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+@app.route('/add-exercise', methods=['POST'])
+@login_required
+def add_exercise():
+    if request.method == 'POST':
+        name = request.form['name']
+        repetitions = request.form['repetitions']
+        weight = request.form.get('weight', 0)  # Using get to handle missing inputs
+        duration = request.form.get('duration', 0)
+        
+        new_exercise = Exercise(
+            name=name,
+            repetitions=int(repetitions),
+            weight=float(weight) if weight else 0,
+            duration=float(duration) if duration else 0,
+            user_id=current_user.id
+        )
+        db.session.add(new_exercise)
+        db.session.commit()
+        flash('New exercise added successfully!')
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))  # Redirect if the method is not POST or any other issue
+

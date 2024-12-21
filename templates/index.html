@@ -9,6 +9,15 @@
         <h1>Welcome, {{ current_user.username }}</h1>
         <h2>Your Exercises:</h2>
         <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
             <form action="/add-exercise" method="post">
                 <input type="text" name="name" placeholder="Exercise Name" required>
                 <input type="number" name="repetitions" placeholder="Repetitions" required>
