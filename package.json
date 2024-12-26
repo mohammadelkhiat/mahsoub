@@ -1,0 +1,24 @@
+{
+  "name": "mahsoub",
+  "version": "1.0.0",
+  "description": "27.10.2024",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "postcss static/css/styles.css -o static/css/output.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadelkhiat/mahsoub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohammadelkhiat/mahsoub/issues"
+  },
+  "homepage": "https://github.com/mohammadelkhiat/mahsoub#readme",
+  "dependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
